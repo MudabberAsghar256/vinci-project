@@ -3,7 +3,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { JanriceLayout } from "../Common/JanriceLayout";
-export default function data() {
+
+export default function Data() {
+  // ✅ Capitalized function name
   const [error, setError] = useState(false);
   const router = useRouter();
 
@@ -18,14 +20,15 @@ export default function data() {
       setError(true);
     }
   };
+
   return (
     <JanriceLayout backHref="/medical" step={2}>
       <div className="p-[32px] pt-0 pb-5">
-        <div className=" ">
+        <div>
           <h3 className="text-[22px] text-black text-center mb-2">
             Data, compliance, & Privacy
           </h3>
-          <p className="text-black mb-4 text-[16px] ">
+          <p className="text-black mb-4 text-[16px]">
             We designed Chart AI to be safe, trustworthy, and explainable.
             Encounter audio, transcripts, patient details or identifiable
             information are not stored. We are HIPAA and GDPR compliant. Read

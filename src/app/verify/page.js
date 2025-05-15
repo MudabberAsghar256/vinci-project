@@ -1,21 +1,23 @@
 "use client";
 import { JanriceLayout } from "../Common/JanriceLayout";
-import { useState } from "react";
-import { useRef } from "react";
-export default function verify() {
+import { useState, useRef } from "react";
+
+export default function Verify() {
   const [error, setError] = useState(false);
+  const inputsRef = useRef([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (healthcare?.checked && terms?.checked) {
+    const code = inputsRef.current.map((input) => input?.value).join("");
+
+    if (code.length === 6) {
       setError(false);
-      console.log("Form Submitted");
+      console.log("Form Submitted, code:", code);
     } else {
       setError(true);
     }
   };
-  const inputsRef = useRef([]);
 
   const handleChange = (e, index) => {
     const value = e.target.value.replace(/[^0-9]/g, "");
@@ -25,6 +27,7 @@ export default function verify() {
       inputsRef.current[index + 1]?.focus();
     }
   };
+
   return (
     <JanriceLayout backHref="/signin" step={3}>
       <div className="pt-0 w-full">
@@ -34,8 +37,8 @@ export default function verify() {
             We’ve sent you a code to the email entered
           </p>
         </div>
-        <form className="w-full rounded  " onSubmit={handleSubmit}>
-          <div className="flex gap-2 mb-6">
+        <form className="w-full rounded" onSubmit={handleSubmit}>
+          <div className="flex gap-2 mb-2">
             {[...Array(6)].map((_, index) => (
               <input
                 key={index}
@@ -49,6 +52,12 @@ export default function verify() {
             ))}
           </div>
 
+          {error && (
+            <p className="text-red-600 text-sm mb-4 text-center">
+              Please enter the complete 6-digit code.
+            </p>
+          )}
+
           <button
             type="submit"
             className="flex justify-center items-center bg-[#4A703E] px-3 py-2.5 border hover:border-primary rounded-lg text-white w-full"
@@ -57,8 +66,8 @@ export default function verify() {
           </button>
         </form>
         <div className="gap-1 flex mt-4 text-[14px] text-center justify-center items-center">
-          <p class="  text-black  ">Did not receive the code?</p>
-          <span class=" text-[#4A703E] cursor-pointer">Resend Code</span>
+          <p className="text-black">Did not receive the code?</p>
+          <span className="text-[#4A703E] cursor-pointer">Resend Code</span>
         </div>
       </div>
     </JanriceLayout>
